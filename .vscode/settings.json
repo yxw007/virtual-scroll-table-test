@@ -1,7 +1,8 @@
 {
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "vue"
-    ]
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
+  "vetur.validation.template": false
 }

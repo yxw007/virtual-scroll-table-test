@@ -2,19 +2,17 @@
 	<v-app id="inspire">
 		<v-data-table
 			id="virtual-scroll-table"
+			v-model="selected"
 			v-scroll:#virtual-scroll-table="onScroll"
 			fixed-header
 			dense
 			:headers="headers"
 			:items="dessertsLimited"
+			item-key="good_id"
 			:single-select="singleSelect"
-			item-key="name"
 			disable-pagination
 			hide-default-footer
 			show-select>
-			<template #top>
-				<v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-			</template>
 			<template #item.product_img="props">
 				<v-img height="90" width="90" :src="props.item.product_img"></v-img>
 			</template>
@@ -34,7 +32,10 @@
 				<v-select v-model="props.item.attribute" :items="options" label="Solo field" item-text="label" return-object></v-select>
 			</template>
 			<template #item.remark="props">
-				<v-text-field :value="props.item.remark" :style="{ width: '140px' }"> </v-text-field>
+				<v-text-field v-model="props.item.remark" :value="props.item.remark" :style="{ width: '140px' }"> </v-text-field>
+			</template>
+			<template #item.option="props">
+				<v-icon small @click="deleteItem(props.item)"> mdi-delete </v-icon>
 			</template>
 			<template v-if="start > 0" #body.prepend>
 				<tr>
@@ -1078,7 +1079,7 @@ export default {
 				{ text: "单项总价(元)", value: "order_total" },
 				{ text: "产品属性", value: "attribute" },
 				{ text: "备注", value: "remark" },
-				{ text: "操作", value: "" },
+				{ text: "操作", value: "option" },
 			],
 			start: 0,
 			timeout: null,
@@ -1099,6 +1100,7 @@ export default {
 					label: "赠品",
 				},
 			],
+			selected: [],
 		};
 	},
 	computed: {
@@ -1146,6 +1148,10 @@ export default {
 		},
 		close() {
 			console.log("Dialog closed");
+		},
+		deleteItem(item) {
+			console.log("deleteItem:", item);
+			this.desserts = this.desserts.filter((it) => it !== item);
 		},
 	},
 };

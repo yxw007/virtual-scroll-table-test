@@ -23,6 +23,12 @@ module.exports = {
 	rules: {
 		"no-unused-vars": "error",
 		"vue/no-multiple-template-root": "error",
+		"vue/valid-v-slot": [
+			"error",
+			{
+				allowModifiers: true,
+			},
+		],
 		"prettier/prettier": [
 			"error",
 			{
